@@ -6,9 +6,9 @@ import PopularMovie from "@/components/PopularMovie";
 export default function Home({ movies }) {
   console.log(movies);
   return (
-    <div>
+    <div className="bg-indigo-400">
       <Hero />
-      <PopularMovie movies={movies.result} />
+      <PopularMovie movies={movies.results} /> {/* Perbaikan: Gunakan movies.results */}
     </div>
   );
 }

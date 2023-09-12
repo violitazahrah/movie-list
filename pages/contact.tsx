@@ -1,7 +1,10 @@
+import Meta from "@/components/Meta";
+
 const contact = () => {
   return (
     <div className="mt-20 text-center">
-      <p className="text-4xl font-bold">Contact Us</p>
+      <Meta title="Contact Us" />
+      <h1 className="text-4xl font-bold">Contact Us</h1>
     </div>
   );
 };
