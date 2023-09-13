@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 const Login = () => {
 	const [email, setEmail] = useState("");
@@ -12,9 +13,26 @@ const Login = () => {
 		setPassword(e.target.value);
 	};
 
-	const handleLogin = () => {
-		// Lakukan proses autentikasi di sini
+	const handleLogin = async () => {
+		try {
+			const response = await axios.post("/api/login", {
+				email,
+				password,
+			});
+
+			if (response.data.success) {
+				// Login berhasil, lakukan tindakan yang sesuai (misalnya, redirect ke halaman dashboard)
+				alert("Login berhasil");
+			} else {
+				// Login gagal, tampilkan pesan kesalahan
+				alert("Login gagal");
+			}
+		} catch (error) {
+			alert("Terjadi kesalahan:", error);
+		}
 	};
+
+	// Lakukan proses autentikasi di sini
 
 	return (
 		<div className="flex justify-center items-center min-h-screen">
