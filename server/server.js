@@ -1,39 +1,36 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const jwt = require("jsonwebtoken");
 
 const app = express();
-const port = 3000;
-const secretKey = "rahasiaku"; // Ganti dengan kunci rahasia yang lebih kuat
+const port = process.env.PORT || 3000;
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-
-// Simpan informasi pengguna (biasanya disimpan di database)
+// Data pengguna statis (biasanya disimpan dalam database)
 const users = [
-	{ id: 1, username: "user1", password: "password1" },
-	{ id: 2, username: "user2", password: "password2" },
+	{ email: "user1@example.com", password: "password1" },
+	{ email: "user2@example.com", password: "password2" },
 ];
 
-// Endpoint untuk login
-app.post("/api/login", (req, res) => {
-	const { username, password } = req.body;
+app.use(bodyParser.json());
 
-	// Cari pengguna berdasarkan username
-	const user = users.find((user) => user.username === username);
+// Endpoint untuk login pengguna
+app.post("/login", (req, res) => {
+	const { email, password } = req.body;
 
-	// Jika pengguna tidak ditemukan atau password salah
-	if (!user || user.password !== password) {
-		return res.status(401).json({ message: "Login gagal" });
+	// Cari pengguna berdasarkan email
+	const user = users.find((user) => user.email === email);
+
+	if (!user) {
+		return res.status(404).json({ message: "Pengguna tidak ditemukan" });
 	}
 
-	// Buat token JWT untuk pengguna yang berhasil login
-	const token = jwt.sign({ userId: user.id }, secretKey, { expiresIn: "1h" });
+	// Periksa kata sandi
+	if (user.password !== password) {
+		return res.status(401).json({ message: "Kata sandi salah" });
+	}
 
-	// Kirim token sebagai respons
-	res.status(200).json({ message: "Login berhasil", token });
+	res.status(200).json({ message: "Login berhasil" });
 });
 
 app.listen(port, () => {
-	console.log(`Server berjalan di http://localhost:${port}`);
+	console.log(`Server berjalan di port ${port}`);
 });
