@@ -13,6 +13,9 @@ module.exports = {
       fontFamily: {
         neue: ["Bebas Neue", "sans-serif"],
       },
+      maxHeight: {
+        128: "32rem",
+      },
     },
   },
   plugins: [],
