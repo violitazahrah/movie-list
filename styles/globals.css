@@ -5,5 +5,8 @@
 @tailwind utilities;
 
 .card-container {
-	height: 550px;
+  height: 525px;
+  width: 250px;
+  padding: 3px;
+  margin: 3px;
 }
